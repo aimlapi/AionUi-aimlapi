@@ -266,7 +266,7 @@ describe('ClientFactory', () => {
       expect(config.defaultHeaders).toEqual({
         'HTTP-Referer': 'https://aionui.com',
         'X-Title': 'AionUi',
-        'X-AIMLAPI-Partner-ID': 'part_aionui',
+        'X-AIMLAPI-Partner-ID': 'part_UJK4IAHBjvT9g4cPDrb7B7KT',
         'X-AIMLAPI-Source': 'agent/aionui',
       });
     });
@@ -278,7 +278,7 @@ describe('ClientFactory', () => {
       const config = vi.mocked(OpenAIRotatingClient).mock.calls[0][1];
       expect(config.defaultHeaders['X-Custom']).toBe('caller');
       expect(config.defaultHeaders['X-Title']).toBe('caller wins');
-      expect(config.defaultHeaders['X-AIMLAPI-Partner-ID']).toBe('part_aionui');
+      expect(config.defaultHeaders['X-AIMLAPI-Partner-ID']).toBe('part_UJK4IAHBjvT9g4cPDrb7B7KT');
     });
   });
 });

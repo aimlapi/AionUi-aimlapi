@@ -32,7 +32,7 @@ const APP_ATTRIBUTION_HEADERS: Readonly<Record<string, string>> = {
  */
 const ATTRIBUTION_HEADERS_BY_API_ORIGIN: Readonly<Record<string, Readonly<Record<string, string>>>> = {
   'https://api.aimlapi.com': {
-    'X-AIMLAPI-Partner-ID': 'part_aionui',
+    'X-AIMLAPI-Partner-ID': 'part_UJK4IAHBjvT9g4cPDrb7B7KT',
     'X-AIMLAPI-Source': 'agent/aionui',
   },
 };
