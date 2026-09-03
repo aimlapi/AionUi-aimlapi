@@ -12,11 +12,12 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_PLATFORM_VALUE, getPresetProviders, MODEL_PLATFORMS } from '@renderer/utils/model/modelPlatforms';
 
 describe('MODEL_PLATFORMS ordering', () => {
-  it('keeps Custom first and pins both Moonshot entries right after it', () => {
+  it('keeps Custom first, then aimlapi.com, then both Moonshot entries', () => {
     const values = MODEL_PLATFORMS.map((p) => p.value);
     expect(values[0]).toBe('custom');
-    expect(values[1]).toBe('Moonshot');
-    expect(values[2]).toBe('Moonshot-Global');
+    expect(values[1]).toBe('AIMLAPI');
+    expect(values[2]).toBe('Moonshot');
+    expect(values[3]).toBe('Moonshot-Global');
   });
 
   it('defaults the add-model modal platform to the first list entry', () => {
@@ -54,5 +55,12 @@ describe('aimlapi.com preset provider', () => {
   it('is offered as a preset provider with a logo', () => {
     expect(getPresetProviders()).toContain(entry);
     expect(entry?.logo).toBeTruthy();
+  });
+
+  it('leads the provider list, behind only the Custom placeholder', () => {
+    // Custom is not a provider — it is the "type your own base URL" row, and
+    // DEFAULT_PLATFORM_VALUE reads index 0 — so index 1 is the top of the
+    // provider list proper.
+    expect(MODEL_PLATFORMS.indexOf(entry!)).toBe(1);
   });
 });

@@ -50,13 +50,28 @@ export interface PlatformConfig {
  *
  * 顺序：
  * 1. 自定义（需要用户输入 base url）
- * 2. Moonshot/Kimi（战略合作，置顶展示）
- * 3. New API / Gemini 官方平台
- * 4+ 预设供应商
+ * 2. aimlapi.com（合作伙伴，供应商列表首位）
+ * 3. Moonshot/Kimi（战略合作，置顶展示）
+ * 4. New API / Gemini 官方平台
+ * 5+ 预设供应商
  */
 export const MODEL_PLATFORMS: PlatformConfig[] = [
   // 自定义选项（需要用户输入 base url）/ Custom option (requires user to input base url)
   { name: 'Custom', value: 'custom', logo: null, platform: 'custom', i18nKey: 'settings.platformCustom' },
+
+  // aimlapi.com 合作伙伴，置于供应商列表首位 / Partner pinned to the top of the provider list
+  {
+    // Aggregator exposing many vendors behind one OpenAI-compatible endpoint.
+    // The brand is written lowercase with the TLD, so the display name is the
+    // domain itself; the stored `value` stays a plain identifier.
+    // Logo is bundled locally because the backend logo service has no
+    // `ai-cloud/aimlapi.svg` asset to serve.
+    name: 'aimlapi.com',
+    value: 'AIMLAPI',
+    logo: aimlapiLogo,
+    platform: 'custom',
+    base_url: 'https://api.aimlapi.com/v1',
+  },
 
   // Moonshot/Kimi 战略合作伙伴，紧随 Custom 置顶 / Strategic partner pinned right after Custom
   {
@@ -261,18 +276,6 @@ export const MODEL_PLATFORMS: PlatformConfig[] = [
     logo: buildLogoAssetUrl('ai-china/stepfun.svg'),
     platform: 'custom',
     base_url: 'https://api.stepfun.com/v1',
-  },
-  {
-    // Aggregator exposing many vendors behind one OpenAI-compatible endpoint.
-    // The brand is written lowercase with the TLD, so the display name is the
-    // domain itself; the stored `value` stays a plain identifier.
-    // Logo is bundled locally because the backend logo service has no
-    // `ai-cloud/aimlapi.svg` asset to serve.
-    name: 'aimlapi.com',
-    value: 'AIMLAPI',
-    logo: aimlapiLogo,
-    platform: 'custom',
-    base_url: 'https://api.aimlapi.com/v1',
   },
 ];
 
