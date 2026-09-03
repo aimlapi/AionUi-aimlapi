@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448" role="img" aria-label="aimlapi.com">
+  <rect width="448" height="448" fill="#ffffff" />
+  <path id="aimlapi-half" fill="#000000" d="M25 25 L248 129 L248 224 Q248 240 233 233 L162 200 Q152 195 152 206 L152 290 L25 348 Z" />
+  <use href="#aimlapi-half" transform="rotate(180 224 224)" />
+</svg>
