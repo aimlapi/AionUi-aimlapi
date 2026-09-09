@@ -9,14 +9,15 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { DEFAULT_PLATFORM_VALUE, MODEL_PLATFORMS } from '@renderer/utils/model/modelPlatforms';
+import { DEFAULT_PLATFORM_VALUE, getPresetProviders, MODEL_PLATFORMS } from '@renderer/utils/model/modelPlatforms';
 
 describe('MODEL_PLATFORMS ordering', () => {
-  it('keeps Custom first and pins both Moonshot entries right after it', () => {
+  it('keeps Custom first, then aimlapi.com, then both Moonshot entries', () => {
     const values = MODEL_PLATFORMS.map((p) => p.value);
     expect(values[0]).toBe('custom');
-    expect(values[1]).toBe('Moonshot');
-    expect(values[2]).toBe('Moonshot-Global');
+    expect(values[1]).toBe('AIMLAPI');
+    expect(values[2]).toBe('Moonshot');
+    expect(values[3]).toBe('Moonshot-Global');
   });
 
   it('defaults the add-model modal platform to the first list entry', () => {
@@ -31,5 +32,35 @@ describe('MODEL_PLATFORMS ordering', () => {
       'https://api.moonshot.cn/v1',
       'https://api.moonshot.ai/v1',
     ]);
+  });
+});
+
+describe('aimlapi.com preset provider', () => {
+  const entry = MODEL_PLATFORMS.find((p) => p.value === 'AIMLAPI');
+
+  it('shows the brand exactly as users know it', () => {
+    // The brand is the domain, lowercase. It is not translated, so it carries
+    // no i18nKey and the raw `name` is what the picker renders.
+    expect(entry?.name).toBe('aimlapi.com');
+    expect(entry?.i18nKey).toBeUndefined();
+  });
+
+  it('points at the OpenAI-compatible endpoint', () => {
+    // /v1/completions does not exist on this API, so the OpenAI-compatible
+    // chat surface at /v1 is the only correct base URL.
+    expect(entry?.base_url).toBe('https://api.aimlapi.com/v1');
+    expect(entry?.platform).toBe('custom');
+  });
+
+  it('is offered as a preset provider with a logo', () => {
+    expect(getPresetProviders()).toContain(entry);
+    expect(entry?.logo).toBeTruthy();
+  });
+
+  it('leads the provider list, behind only the Custom placeholder', () => {
+    // Custom is not a provider — it is the "type your own base URL" row, and
+    // DEFAULT_PLATFORM_VALUE reads index 0 — so index 1 is the top of the
+    // provider list proper.
+    expect(MODEL_PLATFORMS.indexOf(entry!)).toBe(1);
   });
 });
